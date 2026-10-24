@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: donato-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install --production=false && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: DATABASE_URL
+        sync: false # User will provide this in the Render UI
+      - key: JWT_SECRET
+        sync: false # User will provide this or Render can generate
+      - key: JWT_REFRESH_SECRET
+        sync: false # User will provide this or Render can generate
+      - key: FRONTEND_URL
+        sync: false # User will provide this (Vercel URL)

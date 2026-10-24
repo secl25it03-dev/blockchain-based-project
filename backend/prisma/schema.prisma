@@ -1,0 +1,341 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  admin
+  donor
+  vendor
+  restaurant
+  ngo
+}
+
+enum UserStatus {
+  unverified
+  pending_approval
+  active
+  suspended
+}
+
+enum FoodDonationStatus {
+  pending
+  claimed
+  picked_up
+  delivered
+  cancelled
+}
+
+enum PaymentGateway {
+  stripe
+  razorpay
+  mock_sandbox
+  crypto_metamask
+}
+
+enum PaymentStatus {
+  pending
+  completed
+  failed
+  refunded
+}
+
+enum VendorStatus {
+  idle
+  delivering
+  offline
+}
+
+enum NotificationType {
+  donation
+  inventory
+  approval
+  delivery
+  campaign
+  general
+}
+
+enum WasteReason {
+  expired
+  damaged
+  spoiled
+  other
+}
+
+enum CampaignStatus {
+  active
+  completed
+  paused
+  cancelled
+}
+
+enum CampaignCategory {
+  food_hunger
+  education
+  health_medical
+  orphanage_care
+  disaster_relief
+  environment
+}
+
+enum ReportVerificationStatus {
+  submitted
+  pending_review
+  verified_by_admin
+  rejected
+}
+
+enum DonationChannel {
+  fiat_gateway
+  crypto_web3
+}
+
+model User {
+  id                    String                @id @default(cuid())
+  name                  String
+  email                 String                @unique
+  password              String?
+  role                  UserRole
+  status                UserStatus            @default(unverified)
+  avatar                String                @default("")
+  walletAddress         String?
+  otp                   Json?
+  refreshToken          String?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  ngoProfile            NgoProfile?
+  restaurantProfile     RestaurantProfile?
+  vendorProfile         VendorProfile?
+  foodDonations         FoodDonation[]        @relation("DonorDonations")
+  claimedDonations      FoodDonation[]        @relation("ClaimedDonations")
+  assignedDonations     FoodDonation[]        @relation("AssignedDonations")
+  monetaryDonations     MonetaryDonation[]    @relation("DonorMonetary")
+  ngoMonetaryDonations  MonetaryDonation[]    @relation("NGODonations")
+  campaigns             Campaign[]            @relation("NgoCampaigns")
+  donationRecords       DonationRecord[]      @relation("DonorDonationRecords")
+  utilizationReports    UtilizationReport[]   @relation("NgoReports")
+  verificationRequests  VerificationRequest[] @relation("NgoVerificationRequests")
+  notifications         Notification[]        @relation("UserNotifications")
+  wasteLogs             WasteLog[]
+  inventoryItems        Inventory[]           @relation("UserInventory")
+  auditLogs             AuditLog[]            @relation("ActorLogs")
+}
+
+model NgoProfile {
+  id                   String   @id @default(cuid())
+  user                 User     @relation(fields: [userId], references: [id])
+  userId               String   @unique
+  registrationNo       String
+  verificationDocument String
+  capacity             String
+  address              String
+  phone                String
+  walletAddress        String?
+  website              String?
+  mission              String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model RestaurantProfile {
+  id                   String   @id @default(cuid())
+  user                 User     @relation(fields: [userId], references: [id])
+  userId               String   @unique
+  licenseNo            String
+  verificationDocument String
+  address              String
+  phone                String
+  foodCategories       String[]
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model VendorProfile {
+  id                   String       @id @default(cuid())
+  user                 User         @relation(fields: [userId], references: [id])
+  userId               String       @unique
+  vehicleType          String
+  licensePlate         String
+  licenseNumber        String
+  verificationDocument String
+  phone                String
+  status               VendorStatus @default(offline)
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+}
+
+model Campaign {
+  id                 String              @id @default(cuid())
+  ngo                User                @relation("NgoCampaigns", fields: [ngoId], references: [id])
+  ngoId              String
+  title              String
+  description        String
+  beneficiaryStory   String?
+  category           CampaignCategory    @default(food_hunger)
+  targetAmount       Float
+  raisedAmount       Float               @default(0)
+  currency           String              @default("USD")
+  bannerImage        String?
+  deadline           DateTime?
+  status             CampaignStatus      @default(active)
+  onChainCampaignId  String?             // bytes32 identifier on-chain
+  donations          DonationRecord[]
+  utilizationReports UtilizationReport[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+model DonationRecord {
+  id               String          @id @default(cuid())
+  donationRef      String          @unique // e.g., DON-2026-XXXXX
+  campaign         Campaign        @relation(fields: [campaignId], references: [id])
+  campaignId       String
+  donor            User?           @relation("DonorDonationRecords", fields: [donorId], references: [id])
+  donorId          String?
+  donorName        String?         // Attributed or "Anonymous Donor"
+  donorWallet      String?         // Wallet address if Web3
+  isAnonymous      Boolean         @default(false)
+  amount           Float
+  currency         String          @default("USD")
+  channel          DonationChannel @default(fiat_gateway)
+  paymentGateway   PaymentGateway  @default(mock_sandbox)
+  paymentId        String?         // Gateway payment ID or hash
+  status           PaymentStatus   @default(pending)
+  txHash           String?         // Blockchain transaction hash
+  blockNumber      Int?
+  network          String?         // e.g., hardhat, sepolia, polygon
+  verifiedOnChain  Boolean         @default(false)
+  onChainRecordId  String?
+  receiptUrl       String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+model UtilizationReport {
+  id                  String                   @id @default(cuid())
+  campaign            Campaign                 @relation(fields: [campaignId], references: [id])
+  campaignId          String
+  ngo                 User                     @relation("NgoReports", fields: [ngoId], references: [id])
+  ngoId               String
+  title               String
+  description         String
+  amountSpent         Float
+  category            String                   // E.g., Logistics, Rice & Grain, Medical Care
+  supportingDocuments Json?                    // Array of { name, url, fileHash }
+  documentHash        String                   // SHA-256 cryptographic digest of documents
+  onChainReportHash   String?                  // bytes32 representation anchored on blockchain
+  onChainTxHash       String?                  // Smart contract transaction hash
+  verificationStatus  ReportVerificationStatus @default(submitted)
+  adminFeedback       String?
+  verifiedAt          DateTime?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+}
+
+model VerificationRequest {
+  id                 String   @id @default(cuid())
+  ngo                User     @relation("NgoVerificationRequests", fields: [ngoId], references: [id])
+  ngoId              String
+  orgName            String
+  registrationNumber String
+  documentUrl        String
+  status             String   @default("pending") // pending, approved, rejected
+  adminNotes         String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model BlockchainTransaction {
+  id           String   @id @default(cuid())
+  txHash       String   @unique
+  network      String
+  blockNumber  Int?
+  from         String
+  to           String
+  functionName String
+  referenceId  String?
+  status       String   @default("confirmed")
+  payload      Json?
+  createdAt    DateTime @default(now())
+}
+
+model FoodDonation {
+  id               String             @id @default(cuid())
+  donor            User               @relation("DonorDonations", fields: [donorId], references: [id])
+  donorId          String
+  items            Json
+  pickupAddress    String
+  coordinates      Json
+  status           FoodDonationStatus @default(pending)
+  claimedByNGO     User?              @relation("ClaimedDonations", fields: [claimedByNGOId], references: [id])
+  claimedByNGOId   String?
+  assignedVendor   User?              @relation("AssignedDonations", fields: [assignedVendorId], references: [id])
+  assignedVendorId String?
+  deliveryProof    Json?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model MonetaryDonation {
+  id             String         @id @default(cuid())
+  donor          User?          @relation("DonorMonetary", fields: [donorId], references: [id])
+  donorId        String?
+  amount         Float
+  currency       String         @default("USD")
+  paymentGateway PaymentGateway
+  paymentId      String         @unique
+  status         PaymentStatus  @default(pending)
+  ngoRecipient   User?          @relation("NGODonations", fields: [ngoRecipientId], references: [id])
+  ngoRecipientId String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Inventory {
+  id             String   @id @default(cuid())
+  restaurant     User     @relation("UserInventory", fields: [restaurantId], references: [id])
+  restaurantId   String
+  name           String
+  quantity       Float
+  unit           String
+  expiryDate     DateTime
+  thresholdAlert Float    @default(5)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  recipient   User             @relation("UserNotifications", fields: [recipientId], references: [id])
+  recipientId String
+  title       String
+  message     String
+  type        NotificationType
+  read        Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+}
+
+model WasteLog {
+  id           String      @id @default(cuid())
+  restaurant   User        @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+  name         String
+  quantity     Float
+  unit         String
+  reason       WasteReason
+  wasteDate    DateTime    @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actor     User?    @relation("ActorLogs", fields: [actorId], references: [id])
+  actorId   String?
+  action    String
+  ipAddress String?
+  details   String?
+  timestamp DateTime @default(now())
+}
