@@ -35,6 +35,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(rateLimiter);
 
+// Root status endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'DONATO Blockchain Donation Platform API',
+    status: 'online',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      campaigns: '/api/campaigns',
+      blockchain: '/api/blockchain/status',
+    },
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'healthy', timestamp: new Date() });
