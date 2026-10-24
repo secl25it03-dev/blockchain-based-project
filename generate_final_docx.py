@@ -111,14 +111,16 @@ def add_figure_image(doc, img_path, caption_text, width=Inches(5.8)):
     if os.path.exists(img_path):
         p_img = doc.add_paragraph()
         p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_img.paragraph_format.space_before = Pt(12)
+        p_img.paragraph_format.space_before = Pt(10)
         p_img.paragraph_format.space_after = Pt(4)
+        p_img.paragraph_format.keep_with_next = True
         run_img = p_img.add_run()
         run_img.add_picture(img_path, width=width)
         
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_cap.paragraph_format.space_before = Pt(4)
+        p_cap.paragraph_format.line_spacing = 1.15
+        p_cap.paragraph_format.space_before = Pt(3)
         p_cap.paragraph_format.space_after = Pt(14)
         run_cap = p_cap.add_run(caption_text)
         run_cap.italic = True
@@ -128,6 +130,7 @@ def add_figure_image(doc, img_path, caption_text, width=Inches(5.8)):
     else:
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_cap.paragraph_format.line_spacing = 1.15
         p_cap.paragraph_format.space_after = Pt(14)
         run_cap = p_cap.add_run(f"[{caption_text}]")
         run_cap.italic = True
@@ -285,7 +288,7 @@ def create_report():
     t_sigs = doc.add_table(rows=4, cols=3)
     t_sigs.alignment = WD_TABLE_ALIGNMENT.CENTER
     sig_headers = ["SIGNATURE\nSupervisor", "SIGNATURE\nProject Coordinator", "SIGNATURE\nHead of the Department"]
-    sig_names = ["MRS. NEELA K", "MRS. SANKARI S", "DR. M. SURESHKUMAR"]
+    sig_names = ["MRS. NEELA K", "DR. S. SANKARI", "DR. M. SURESHKUMAR"]
     sig_desigs = ["Assistant Professor", "Assistant Professor", "Head of the Department"]
     sig_depts = ["Information Technology", "Information Technology", "Information Technology"]
 
@@ -342,7 +345,7 @@ def create_report():
         "We are deeply indebted to our Head of the Department, Dr. M. SURESHKUMAR, Department of Information Technology, for the insightful suggestions, mentorship, and continuous motivation, which have guided us at every stage."
     )
     add_body_p(
-        "We thank our Innovative Design Lab-I Coordinator, MRS. SANKARI S, Assistant Professor, who has been instrumental in coordinating efforts, providing feedback, and ensuring smooth project progress."
+        "We thank our Innovative Design Lab-I Coordinator, Dr. S. Sankari, Assistant Professor, who has been instrumental in coordinating efforts, providing feedback, and ensuring smooth project progress."
     )
     add_body_p(
         "We express our gratitude and sincere thanks to our Guide, MRS. NEELA K, Assistant Professor, for her expertise, patience, and valuable technical insights. Her constructive feedback, encouragement, and availability for guidance have been crucial in overcoming challenges and achieving our objectives."
@@ -433,7 +436,12 @@ def create_report():
             if len(c2.paragraphs[0].runs) > 0:
                 c2.paragraphs[0].runs[0].bold = True
 
-    format_grid_table(t_toc, [Inches(1.2), Inches(4.25), Inches(0.8)], has_header=True)
+    format_grid_table(
+        t_toc,
+        [Inches(1.2), Inches(4.25), Inches(0.8)],
+        has_header=True,
+        col_alignments=[WD_ALIGN_PARAGRAPH.CENTER, WD_ALIGN_PARAGRAPH.LEFT, WD_ALIGN_PARAGRAPH.RIGHT]
+    )
 
     # ================= PAGE 7: LIST OF FIGURES =================
     doc.add_page_break()
@@ -466,7 +474,12 @@ def create_report():
         row.cells[1].paragraphs[0].text = name
         row.cells[2].paragraphs[0].text = pg
         row.cells[2].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    format_grid_table(t_lof, [Inches(1.2), Inches(4.25), Inches(0.8)], has_header=True)
+    format_grid_table(
+        t_lof,
+        [Inches(1.2), Inches(4.25), Inches(0.8)],
+        has_header=True,
+        col_alignments=[WD_ALIGN_PARAGRAPH.CENTER, WD_ALIGN_PARAGRAPH.LEFT, WD_ALIGN_PARAGRAPH.RIGHT]
+    )
 
     # ================= PAGE 8: LIST OF TABLES =================
     doc.add_page_break()
@@ -498,7 +511,12 @@ def create_report():
         row.cells[1].paragraphs[0].text = name
         row.cells[2].paragraphs[0].text = pg
         row.cells[2].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    format_grid_table(t_lot, [Inches(1.2), Inches(4.25), Inches(0.8)], has_header=True)
+    format_grid_table(
+        t_lot,
+        [Inches(1.2), Inches(4.25), Inches(0.8)],
+        has_header=True,
+        col_alignments=[WD_ALIGN_PARAGRAPH.CENTER, WD_ALIGN_PARAGRAPH.LEFT, WD_ALIGN_PARAGRAPH.RIGHT]
+    )
 
     # ================= PAGE 9: ABSTRACT =================
     doc.add_page_break()
@@ -1015,13 +1033,13 @@ def create_report():
         doc,
         os.path.join(assets_dir, "fig_a1_3_ngo_profile.png"),
         "Figure A1.3: Authenticated Institutional NGO Profile with Verified Accreditation Badges",
-        width=Inches(5.4)
+        width=Inches(4.8)
     )
     add_figure_image(
         doc,
         os.path.join(assets_dir, "fig_a1_4_checkout.png"),
         "Figure A1.4: Multi-Channel Donation Checkout and Secure Payment Gateway Modal",
-        width=Inches(5.0)
+        width=Inches(4.6)
     )
 
     doc.add_page_break()
@@ -1030,13 +1048,13 @@ def create_report():
         doc,
         os.path.join(assets_dir, "fig_a1_5_impact_feed.png"),
         "Figure A1.5: Real-Time Beneficiary Impact Feed and Interactive Milestone Tracker",
-        width=Inches(5.4)
+        width=Inches(4.8)
     )
     add_figure_image(
         doc,
         os.path.join(assets_dir, "fig_a1_6_auth.png"),
         "Figure A1.6: Stateless Role-Based Authentication and User Access Portal",
-        width=Inches(5.0)
+        width=Inches(4.6)
     )
 
     doc.add_page_break()
@@ -1045,7 +1063,7 @@ def create_report():
         doc,
         os.path.join(assets_dir, "fig_a1_7_verification_receipt.png"),
         "Figure A1.7: Donor Impact Dashboard, Active Contributions, and Tax Compliance History",
-        width=Inches(5.6)
+        width=Inches(5.4)
     )
 
     # ================= APPENDIX II: KEY PERFORMANCE INDICATORS =================

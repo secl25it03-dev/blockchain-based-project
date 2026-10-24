@@ -31,7 +31,7 @@ Certified that this Innovative Design Lab-I report **“DONATO: A TRANSPARENT AN
 SIGNATURE                        SIGNATURE                        SIGNATURE  
 Supervisor                       Project Coordinator              Head of the Department  
 
-MRS. NEELA K                     MRS. SANKARI S                   DR. M. SURESHKUMAR  
+MRS. NEELA K                     DR. S. SANKARI                   DR. M. SURESHKUMAR  
 Assistant Professor              Assistant Professor              Head of the Department  
 Information Technology           Information Technology           Information Technology  
 ```
@@ -56,7 +56,7 @@ We express our sincere thanks to our beloved Principal, **Dr. J. RAJA**, for his
 
 We are deeply indebted to our Head of the Department, **Dr. M. SURESHKUMAR**, Department of Information Technology, for the insightful suggestions, mentorship, and continuous motivation, which have guided us at every stage.  
 
-We thank our Innovative Design Lab-I Coordinator, **MRS. SANKARI S**, Assistant Professor, who has been instrumental in coordinating efforts, providing feedback, and ensuring smooth project progress.  
+We thank our Innovative Design Lab-I Coordinator, **Dr. S. Sankari**, Assistant Professor, who has been instrumental in coordinating efforts, providing feedback, and ensuring smooth project progress.  
 
 We express our gratitude and sincere thanks to our Guide, **MRS. NEELA K**, Assistant Professor, for her expertise, patience, and valuable technical insights. Her constructive feedback, encouragement, and availability for guidance have been crucial in overcoming challenges and achieving our objectives.  
 
