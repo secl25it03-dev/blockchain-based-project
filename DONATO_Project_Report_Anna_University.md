@@ -178,6 +178,9 @@ DONATO is an innovative, cloud-based philanthropic technology platform designed 
 * **Unique Selling Proposition (USP):** A dual-sided transparency architecture combining strict multi-stage institutional KYC onboarding, zero hidden commission on donor capital (100% of funds reach the cause), instant automated 80G digital receipts with unique audit hashes, and mandatory closed-loop photographic and invoice impact proof before subsequent milestone funding tranches are cleared.
 * **Technology Architecture:** Next.js 16 serverless edge routing, React 19 UI, Tailwind CSS styling, Neon Serverless PostgreSQL with Prisma ORM, and integrated sandbox payment processing pipelines designed for sub-second page loads and zero hosting overhead during early stage rollout.
 
+![Figure 1.1: DONATO End-to-End System Architecture & Information Flow](./assets/fig_1_1_architecture.png)  
+*Figure 1.1: DONATO End-to-End System Architecture & Information Flow*  
+
 ---
 
 # CHAPTER 2: THE PROBLEM AND OPPORTUNITY  
@@ -259,6 +262,9 @@ While established crowdfunding platforms such as GiveIndia, Milaap, and Ketto co
 | **In-Kind Item Donations** | **Fully Integrated** | Monetary Only | Monetary Only | Monetary Only |
 | **Institutional KYC Level** | **Mandatory Multi-Tier** | Semi-Vetted | Basic Phone/ID | Basic Phone/ID |
 
+![Figure 4.1: Competitive Positioning Matrix (Transparency vs. Operational Cost)](./assets/fig_4_1_positioning.png)  
+*Figure 4.1: Competitive Positioning Matrix (Transparency vs. Operational Cost)*  
+
 ### 4.5 Unique Selling Proposition (USP)  
 DONATO’s Unique Selling Proposition lies in its uncompromising, end-to-end closed-loop transparency model. Unlike commercial crowdfunding portals that profit from substantial commission cuts and abandon the donor post-transaction, DONATO charges 0% commission to donors, ensures 100% of capital reaches the verified cause, enforces mandatory photographic milestone updates from recipient institutions, and issues cryptographically verifiable Section 80G digital tax receipts within seconds.
 
@@ -284,6 +290,9 @@ The Value Proposition Canvas systematically aligns donor and NGO requirements wi
 * **Customer Jobs:** Donors seek to make authentic community contributions quickly, track fund usage, and claim lawful tax exemptions. NGOs need to raise recurring operational funds, build public credibility, and minimize administrative bookkeeping overhead.  
 * **Pains Relieved:** Eliminates the anxiety of donating to fraudulent entities; removes the frustration of opaque fund deployment; eliminates predatory 8% platform fee deductions; eliminates delayed manual receipt issuance.  
 * **Gains Created:** Delivers instant peace of mind through verifiable visual impact updates; provides automated accounting and compliance infrastructure to grassroots trusts; fosters sustained emotional bonds between patrons and direct human beneficiaries.
+
+![Figure 5.1: Value Proposition Canvas for Donors and Partner Non-Profits](./assets/fig_5_1_value_prop.png)  
+*Figure 5.1: Value Proposition Canvas for Donors and Partner Non-Profits*  
 
 ### 5.4 Minimum Viable Product (MVP)  
 The developed Minimum Viable Product (MVP) encompasses a fully functional full-stack web application with the following core modules:  
@@ -315,6 +324,14 @@ The revenue architecture is structured around three predictable, recurring monet
    * *Enterprise Tier (₹1,499 / Month):* Priority campaign listing, advanced donor analytics, custom sub-domain, dedicated CSR matching.  
 2. **Corporate CSR Matching & Portal Licensing:** Annual software licensing fee (₹50,000 to ₹1,50,000 / year) charged to corporate enterprises for employee donation-matching portals and automated audited CSR impact reports.  
 3. **Merchant Payment Processing Pass-Through:** Standard payment gateway interchange fees (~1.8% handled directly by Razorpay/Stripe) without hidden platform surcharges.
+
+*Table 6.1: Tiered NGO Platform Subscription & Feature Breakdown*
+
+| Subscription Tier | Pricing (INR) | Target Non-Profit Scale | Key Feature Inclusions & Operational Privileges |
+| :--- | :---: | :--- | :--- |
+| **Starter Tier** | Free / ₹0 | Small grassroots care homes & rural orphanages (<20 beneficiaries) | Up to 2 concurrent campaigns, basic donor tracking, standard digital 80G receipts, community forum support. |
+| **Growth Tier** | ₹499 / Month | Registered mid-sized NGOs & trusts seeking sustainable scale | Unlimited active campaigns, automated budgeting & line-item allocation, donor retention CRM, automated Form 10BD export. |
+| **Enterprise Tier** | ₹1,499 / Month | State/national NGOs, multi-branch charitable foundations | Priority marketplace ranking, custom portal sub-domain, advanced donor cohort analytics, dedicated corporate CSR matchmaker. |
 
 ### 6.3 Sales Plan and Go to Market Strategy  
 DONATO executes a disciplined three-phase Go-To-Market (GTM) rollout:  
@@ -352,17 +369,29 @@ Table 7.1 provides the comprehensive 3-year financial forecast for DONATO, based
 Operating projections indicate that DONATO achieves financial break-even in Month 14 of public operations, corresponding to approximately 65 concurrently active non-profit Growth Tier subscriptions. Beyond this threshold, the marginal cost of adding a verified NGO to the serverless cloud infrastructure is under ₹40 per month, generating an extraordinary 85%+ gross margin on software operations.
 
 ### 7.4 Unit Economics  
-* **Customer Acquisition Cost (CAC) per NGO:** Estimated at ₹1,200, achieved through targeted community campus ambassadors and academic non-profit workshops.  
-* **Annual Recurring Revenue (ARR) per NGO:** Average blended ARR across Growth (₹499/mo) and Enterprise (₹1,499/mo) tiers equals ₹7,188 per institution.  
-* **Customer Lifetime Value (CLV):** Assuming an average retention tenure of 36 months, CLV equals ₹21,500, yielding an exceptional LTV:CAC ratio of 17.9x.  
-* **Payback Period:** 2.0 months of subscription revenue fully amortizes customer acquisition costs.
+A rigorous unit economics model affirms the long-term capital efficiency and high scalability of the platform. Key unit economic indicators are detailed in Table 7.2:
+
+*Table 7.2: Unit Economics Metrics & Customer Lifetime Value (CLV)*
+
+| Metric Parameter | Calculated Value | Industry Benchmark | Strategic Evaluation & Implication |
+| :--- | :---: | :---: | :--- |
+| **Customer Acquisition Cost (CAC)** | ₹ 1,200 | ₹ 4,500 – ₹ 8,000 | Highly cost-effective via student campus ambassador networks and trust word-of-mouth. |
+| **Blended Annual Recurring Revenue (ARR)** | ₹ 7,188 / NGO | ₹ 6,000 – ₹ 12,000 | Weighted average across Growth (₹499/mo) and Enterprise (₹1,499/mo) software plans. |
+| **Average Customer Lifetime (Tenure)** | 36 Months (3 Years) | 18 – 24 Months | High non-profit retention driven by automated 10BD filing and donor relationship lock-in. |
+| **Customer Lifetime Value (CLV)** | ₹ 21,564 | ₹ 12,000 | Enables aggressive reinvestment in field verification and compliance infrastructure. |
+| **LTV to CAC Ratio & Payback** | 17.9x (2.0 Mo. Payback) | 3.0x (12 Mo. Payback) | Exceptional venture sustainability far exceeding benchmark SaaS viability thresholds. |
 
 ### 7.5 Funding Plan and Capital Requirements  
-To scale platform operations and expand field verification across Tamil Nadu, DONATO is seeking seed grant funding of INR 5,00,000 through institutional innovation grants (such as EDII-TN IVP, AICTE, and Sairam Innovation Ecosystem). The proposed allocation is structured as follows:  
-* **40% (₹ 2,00,000)** for Platform Engineering & Edge Cloud Infrastructure (automated document parsing, microservices, mobile app).  
-* **30% (₹ 1,50,000)** for Physical NGO Field Verification, background checks, and grassroots onboarding workshops.  
-* **20% (₹ 1,00,000)** for Digital Outreach, community storytelling campaigns, and donor acquisition.  
-* **10% (₹ 50,000)** for Legal, Regulatory, and Section 80G / Data Compliance auditing reserves.
+To scale platform operations and expand field verification across Tamil Nadu, DONATO is seeking seed grant funding of INR 5,00,000 through institutional innovation grants (such as EDII-TN IVP, AICTE, and Sairam Innovation Ecosystem). Table 7.3 outlines the capital deployment breakdown:
+
+*Table 7.3: Initial Capital Allocation & Seed Funding Deployment Strategy*
+
+| Budget Category | Percentage | Amount (INR) | Strategic Objective & Milestone Deliverables |
+| :--- | :---: | :---: | :--- |
+| **Platform Engineering & Cloud Infrastructure** | 40% | ₹ 2,00,000 | Serverless PostgreSQL scaling, OCR document verification microservices, React Native mobile app development. |
+| **On-Ground NGO Verification & Field Audits** | 30% | ₹ 1,50,000 | Physical site visits, background verification, trust onboarding clinics across Chennai & Kanchipuram. |
+| **Digital Outreach & Community Storytelling** | 20% | ₹ 1,00,000 | High-impact social storytelling, university campus ambassador drives, video documentary production. |
+| **Legal, Regulatory & Tax Reserves** | 10% | ₹ 50,000 | Section 80G compliance audit reserves, legal charter formation, security penetration testing. |
 
 ---
 
@@ -444,15 +473,27 @@ This section documents the foundational software architecture, operational analy
 * **Payment Gateway Pipeline:** Stripe Checkout & Razorpay Sandbox test credentials supporting UPI and cards.  
 
 ### ANALYTICAL PLATFORM PERFORMANCE GRAPH  
+![Figure A1.1: Cumulative Donation Volume & NGO Onboarding Growth Trajectory](./assets/fig_a1_1_growth_chart.png)  
 *Figure A1.1: Cumulative Donation Volume (INR Thousands) & Onboarded Verified NGOs Growth Trajectory*  
 
 ### OUTPUT APPLICATION SCREEN SHOTS  
-* *Figure A1.2: Verified NGO Discovery and Geographic Cause Directory Portal*  
-* *Figure A1.3: Authenticated Institutional NGO Profile with Verified Accreditation Badges*  
-* *Figure A1.4: Multi-Channel Donation Checkout and Secure Payment Gateway Modal*  
-* *Figure A1.5: Real-Time Beneficiary Impact Feed and Interactive Milestone Tracker*  
-* *Figure A1.6: Stateless Role-Based Authentication and User Access Portal*  
-* *Figure A1.7: Donor Impact Dashboard, Active Contributions, and Tax Compliance History*  
+![Figure A1.2: Verified NGO Discovery and Geographic Cause Directory Portal](./assets/fig_a1_2_discovery.png)  
+*Figure A1.2: Verified NGO Discovery and Geographic Cause Directory Portal*  
+
+![Figure A1.3: Authenticated Institutional NGO Profile with Verified Accreditation Badges](./assets/fig_a1_3_ngo_profile.png)  
+*Figure A1.3: Authenticated Institutional NGO Profile with Verified Accreditation Badges*  
+
+![Figure A1.4: Multi-Channel Donation Checkout and Secure Payment Gateway Modal](./assets/fig_a1_4_checkout.png)  
+*Figure A1.4: Multi-Channel Donation Checkout and Secure Payment Gateway Modal*  
+
+![Figure A1.5: Real-Time Beneficiary Impact Feed and Interactive Milestone Tracker](./assets/fig_a1_5_impact_feed.png)  
+*Figure A1.5: Real-Time Beneficiary Impact Feed and Interactive Milestone Tracker*  
+
+![Figure A1.6: Stateless Role-Based Authentication and User Access Portal](./assets/fig_a1_6_auth.png)  
+*Figure A1.6: Stateless Role-Based Authentication and User Access Portal*  
+
+![Figure A1.7: Donor Impact Dashboard, Active Contributions, and Tax Compliance History](./assets/fig_a1_7_verification_receipt.png)  
+*Figure A1.7: Donor Impact Dashboard, Active Contributions, and Tax Compliance History*  
 
 ---
 
